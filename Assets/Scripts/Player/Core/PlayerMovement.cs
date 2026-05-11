@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("References")]
     [SerializeField] private Player player;
     [SerializeField] private InputManager input;
+    [SerializeField] private Animator animator;
 
     [Header("Ground Check")]
     [SerializeField] private Transform groundCheck;
@@ -46,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
 
+        if (animator == null)
+            animator = GetComponent<Animator>();
+
         if (input == null && player != null)
             input = player.Input;
 
@@ -78,6 +82,13 @@ public class PlayerMovement : MonoBehaviour
 
         float speed = input.SprintHeld ? sprintSpeed : walkSpeed;
         controller.Move(moveDir * speed * Time.deltaTime);
+
+        // Анимация: 0..1 = ходьба, >1 = бег
+        if (animator != null)
+        {
+            float animSpeed = moveDir.magnitude * (speed / walkSpeed);
+            animator.SetFloat("speed", animSpeed);
+        }
 
         velocity.y += gravity * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
