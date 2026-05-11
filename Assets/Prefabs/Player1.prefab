@@ -450,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 3139116673182701166}
   input: {fileID: 7218959238954689315}
+  animator: {fileID: 0}
   groundCheck: {fileID: 4340694927995414547}
   groundCheckRadius: 0.25
   groundLayers:
